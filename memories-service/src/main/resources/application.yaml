@@ -1,12 +1,12 @@
 spring:
   config:
-    import: optional:file:../.env
+    import: optional:file:.env[.properties]
   application:
    name: memories-service
   rabbitmq:
-    virtual-host: ${RABBITMQ_VHOST}
-    username: ${RABBITMQ_USERNAME}
-    password: ${RABBITMQ_PASSWORD}
+    virtual-host: ${RABBITMQ_DEFAULT_VHOST}
+    username: ${RABBITMQ_DEFAULT_USER}
+    password: ${RABBITMQ_DEFAULT_PASS}
 eureka:
   client:
     service-url:
