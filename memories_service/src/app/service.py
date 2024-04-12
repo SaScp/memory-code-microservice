@@ -1,5 +1,3 @@
-from fastapi import HTTPException
-
 from .manager import MemoriesManager
 from ..models import UpdateMemoryPage
 

@@ -1,7 +1,7 @@
 import aiohttp
 from fastapi import HTTPException
 
-from ..models import Page, UpdateMemoryPage, User
+from ..models import Page, UpdateMemoryPage
 from .utils import updater, token
 
 
