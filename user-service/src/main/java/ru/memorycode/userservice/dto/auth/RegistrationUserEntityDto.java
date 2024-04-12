@@ -1,4 +1,4 @@
-package ru.memorycode.userservice.dto;
+package ru.memorycode.userservice.dto.auth;
 
 import lombok.Data;
 

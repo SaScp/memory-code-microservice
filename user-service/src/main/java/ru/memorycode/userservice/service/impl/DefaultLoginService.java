@@ -20,7 +20,7 @@ public class DefaultLoginService implements LoginService {
     private WebClient webClient;
 
     public DefaultLoginService(WebClient.Builder builder) {
-        this.webClient = WebClient.builder().build();
+        this.webClient = builder.build();
     }
 
     @Override
@@ -30,6 +30,8 @@ public class DefaultLoginService implements LoginService {
                 .accept(MediaType.APPLICATION_JSON)
                 .body(Mono.just(new LoginUserEntity(email, password, RequestConstant.DEVICE)), LoginUserEntity.class)
                 .retrieve()
+                .onStatus(status -> status.is4xxClientError() || status.is5xxServerError(),
+                        clientResponse -> Mono.error(new UserNotFoundException("User not found")))
                 .bodyToMono(Map.class)
                 .handle((a, sink) -> {
                     if (Optional.ofNullable(a.get("access_token")).isPresent()) {

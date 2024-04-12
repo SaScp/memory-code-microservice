@@ -12,12 +12,4 @@ public class LoginUserEntity {
 
     private String device;
 
-    @Override
-    public String toString() {
-        return "{" +
-                "\"email\" :" +"\""  + email +"\""  +
-                ", \"password\" : " +"\""  + password +"\""  +
-                ", \"device\" : " +"\""  + device +"\""  +
-                '}';
-    }
 }

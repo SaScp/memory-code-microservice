@@ -1,37 +1,35 @@
 package ru.memorycode.userservice.service.impl;
 
-import lombok.AllArgsConstructor;
-import org.apache.http.HttpResponse;
-import org.jsoup.Jsoup;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.resource.HttpResource;
 import reactor.core.publisher.Mono;
-import ru.memorycode.userservice.dto.RegistrationUserEntityDto;
+import ru.memorycode.userservice.dto.auth.RegistrationUserEntityDto;
 import ru.memorycode.userservice.model.auth.RegistrationUserEntity;
 import ru.memorycode.userservice.service.RegistrationService;
+import ru.memorycode.userservice.service.UserService;
 import ru.memorycode.userservice.util.constant.RequestConstant;
 
 import java.net.URI;
-import java.util.Map;
 import java.util.Random;
 
 @Service
+@Slf4j
 public class DefaultRegistrationService implements RegistrationService {
 
-    private static final Logger log = LoggerFactory.getLogger(DefaultRegistrationService.class);
     private WebClient webClient;
     private ModelMapper mapper;
-    public DefaultRegistrationService(WebClient.Builder builder, ModelMapper mapper) {
+
+    private UserService userService;
+
+    public DefaultRegistrationService(WebClient.Builder builder, ModelMapper mapper, UserService userService) {
         this.mapper = mapper;
-        this.webClient = WebClient.builder().build();
+        this.webClient = builder.build();
+        this.userService = userService;
     }
 
     @Override
@@ -48,16 +46,19 @@ public class DefaultRegistrationService implements RegistrationService {
                 .accept(MediaType.APPLICATION_JSON)
                 .body(Mono.just(entity), RegistrationUserEntity.class)
                 .exchangeToMono(responseA -> {
-                    log.info(responseA.statusCode().toString());
                     if (responseA.statusCode().is2xxSuccessful()) {
+                        log.info(responseA.statusCode().toString());
                         return Mono.just(ResponseEntity.created(URI.create(RequestConstant.REGISTRATION)).build());
                     } else {
+                        log.error(responseA.statusCode().toString());
                         return Mono.just(ResponseEntity.badRequest().build());
                     }
                 });
 
         return response;
     }
+
+
 
     private String passwordGenerate() {
         StringBuilder stringBuilder = new StringBuilder();

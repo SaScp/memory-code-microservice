@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
-import ru.memorycode.userservice.dto.LoginUserEntityDto;
-import ru.memorycode.userservice.dto.RegistrationUserEntityDto;
+import ru.memorycode.userservice.dto.auth.LoginUserEntityDto;
+import ru.memorycode.userservice.dto.auth.RegistrationUserEntityDto;
 import ru.memorycode.userservice.service.LoginService;
 import ru.memorycode.userservice.service.RegistrationService;
 
@@ -25,13 +25,14 @@ public class AuthenticationController {
 
     private RegistrationService registrationService;
 
-    @PostMapping("/get-token")
+    @PostMapping("/login")
     public Mono<Map> getUser(@RequestBody LoginUserEntityDto loginUserEntityDto) {
-        return loginService.login(loginUserEntityDto.getEmail(), loginUserEntityDto.getPassword());
+        return loginService.login(loginUserEntityDto.getLogin(), loginUserEntityDto.getPassword());
     }
 
     @PostMapping("/registration")
     public Mono<ResponseEntity<HttpStatus>> registration(@RequestBody RegistrationUserEntityDto userEntityDto) {
         return registrationService.registerUser(userEntityDto);
     }
+
 }

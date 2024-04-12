@@ -3,6 +3,7 @@ package ru.memorycode.userservice.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -11,6 +12,7 @@ import java.util.List;
 public class UserAuthentication {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -22,4 +24,11 @@ public class UserAuthentication {
 
     @OneToMany(mappedBy = "userAuth")
     private List<User> users;
+
+    public void addUser(User user) {
+        if (users == null) {
+            users = new ArrayList<>();
+        }
+        users.add(user);
+    }
 }
