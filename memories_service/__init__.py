@@ -1,0 +1,1 @@
+from .src.app import memories_service_router

@@ -12,7 +12,7 @@ class Start(BaseModel):
     month: str
     year: int
 
-class Person(BaseModel):
+class Page(BaseModel):
     access_password: Optional[str]
     accessible_by_password: Optional[bool]
     author_epitaph: Optional[str]
