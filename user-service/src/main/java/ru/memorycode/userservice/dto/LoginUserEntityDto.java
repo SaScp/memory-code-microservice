@@ -1,4 +1,4 @@
-package ru.memorycode.dto;
+package ru.memorycode.userservice.dto;
 
 import lombok.Data;
 
