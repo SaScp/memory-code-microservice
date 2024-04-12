@@ -3,7 +3,7 @@ networks:
         driver: bridge
 services:
   rabbitmq:
-    image: rabbitmq:3-management
+    image: rabbitmq:latest
     container_name: memoryCode-RabbitMQ
     env_file:
       - .env
@@ -13,6 +13,31 @@ services:
       RABBITMQ_DEFAULT_VHOST: ${RABBITMQ_DEFAULT_VHOST}
     ports:
       - 5672:5672
+    networks:
+      - app-network
+  rabbitmq-mgmt:
+    image: rabbitmq:management
+    container_name: memoryCode-RabbitMQ-Mgmt
+    env_file:
+      - .env
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+      RABBITMQ_DEFAULT_VHOST: ${RABBITMQ_DEFAULT_VHOST}
+    ports:
       - 15672:15672
     networks:
       - app-network
+  db_pg:
+    image: postgres:15
+    container_name: memoryCode-postgres
+    networks:
+      - app-network
+    environment:
+      POSTGRES_DB: ${POSTGRES_DATABASE}
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
+    ports:
+      - 5433:5432
