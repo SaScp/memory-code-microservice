@@ -1,10 +1,10 @@
-package ru.memorycode.memoriesservice;
+package ru.memorycode.userservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MemoriesServiceApplicationTests {
+class UserServiceApplicationTests {
 
     @Test
     void contextLoads() {

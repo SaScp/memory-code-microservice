@@ -8,10 +8,11 @@
         <outputRelativeToContentRoot value="true" />
         <module name="discovery-service" />
         <module name="yandexgpt-service" />
-        <module name="memories-service" />
+        <module name="user-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="memories-service" target="17" />
       <module name="yandexgpt" target="17" />
     </bytecodeTargetLevel>
   </component>
@@ -19,6 +20,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="discovery-service" options="-parameters" />
       <module name="memories-service" options="-parameters" />
+      <module name="user-service" options="-parameters" />
       <module name="yandexgpt" options="-parameters" />
       <module name="yandexgpt-service" options="-parameters" />
     </option>

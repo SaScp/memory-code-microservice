@@ -8,10 +8,12 @@
         <option value="$PROJECT_DIR$/yandexgpt/pom.xml" />
         <option value="$PROJECT_DIR$/yandexgpt-service/pom.xml" />
         <option value="$PROJECT_DIR$/discovery-service/pom.xml" />
+        <option value="$PROJECT_DIR$/user-service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/memories-service/pom.xml" />
         <option value="$PROJECT_DIR$/yandexgpt/pom.xml" />
       </set>
     </option>

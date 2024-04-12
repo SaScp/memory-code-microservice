@@ -1,0 +1,18 @@
+spring:
+  application:
+   name: user-service
+  datasource:
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DATABASE}
+    driver-class-name: org.postgresql.Driver
+  config:
+    import: optional:file:.env[.properties]
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: false
+    register-with-eureka: true
+server:
+  port: 8109
