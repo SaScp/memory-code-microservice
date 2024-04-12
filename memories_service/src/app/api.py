@@ -6,10 +6,6 @@ from ..models import Page, UpdateMemoryPage
 memories = APIRouter()
 service = MemoriesService()
 
-@memories.get('/test', 
-              tags=['Test endpoint'])
-async def test_endpoint():
-    return await service.test_endpoint()
 
 @memories.get('/memory-pages',
               tags=['Memories'],

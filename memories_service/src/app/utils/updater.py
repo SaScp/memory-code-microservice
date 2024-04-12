@@ -3,6 +3,7 @@ from typing import Union
 
 from ...models import Biography, AdditionalInformation
 
+
 class PageUpdater:
     
     def __init__(self) -> None:
