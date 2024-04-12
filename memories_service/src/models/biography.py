@@ -12,5 +12,5 @@ class Biography(BaseModel):
     description: str
     order: int
     checked: bool = True
-    photos: list[Photos] = [Photos() for _ in range(0, 2)]
+    photos: Optional[list[Photos]]
     media: list = []
