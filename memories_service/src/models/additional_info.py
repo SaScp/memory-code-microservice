@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
 
-class PageInformation(BaseModel):
+class AdditionalInformation(BaseModel):
     title: str
     description: str
