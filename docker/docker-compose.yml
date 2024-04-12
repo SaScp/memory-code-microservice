@@ -1,0 +1,18 @@
+networks:
+    app-network:
+        driver: bridge
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: memoryCode-RabbitMQ
+    env_file:
+      - ../.env
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USERNAME}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+      RABBITMQ_DEFAULT_VHOST: ${RABBITMQ_VHOST}
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - app-network
