@@ -3,14 +3,14 @@ from pydantic import BaseModel
 
 
 class Photos(BaseModel):
-    url: Optional[str] = None
-    title: Optional[str] = None
-    order: Optional[int] = None
+    url: Optional[str]
+    title: Optional[str]
+    order: Optional[int]
     
 class Biography(BaseModel):
     title: str
     description: str
     order: int
-    checked: bool = True
+    checked: Optional[bool] = True
     photos: Optional[list[Photos]]
-    media: list = []
+    media: Optional[list]
