@@ -25,7 +25,6 @@ import ru.memorycode.userservice.model.auth.LoginUserEntity;
 @EnableDiscoveryClient
 @Slf4j
 @Async
-@EnableFeignClients
 public class UserServiceApplication  {
 
     public static void main(String[] args) {
