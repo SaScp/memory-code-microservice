@@ -13,6 +13,7 @@ import ru.memorycode.userservice.dto.auth.RegistrationUserEntityDto;
 import ru.memorycode.userservice.service.LoginService;
 import ru.memorycode.userservice.service.RegistrationService;
 
+import java.io.IOException;
 import java.util.Map;
 
 
@@ -25,13 +26,13 @@ public class AuthenticationController {
 
     private RegistrationService registrationService;
 
-    @PostMapping("/login")
+    @PostMapping(value = "/login", produces = "application/json")
     public Mono<Map> getUser(@RequestBody LoginUserEntityDto loginUserEntityDto) {
         return loginService.login(loginUserEntityDto.getLogin(), loginUserEntityDto.getPassword());
     }
 
-    @PostMapping("/registration")
-    public Mono<ResponseEntity<HttpStatus>> registration(@RequestBody RegistrationUserEntityDto userEntityDto) {
+    @PostMapping(value = "/registration", produces = "application/json")
+    public ResponseEntity<HttpStatus> registration(@RequestBody RegistrationUserEntityDto userEntityDto) throws IOException, InterruptedException {
         return registrationService.registerUser(userEntityDto);
     }
 

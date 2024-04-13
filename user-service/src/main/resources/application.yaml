@@ -8,11 +8,19 @@ spring:
     driver-class-name: org.postgresql.Driver
   config:
     import: optional:file:.env[.properties]
+  cloud:
+    openfeign:
+      httpclient:
+        follow-redirects: true
 eureka:
   client:
     service-url:
       defaultZone: http://${DISCOVERY_HOST_CLIENT}:${DISCOVERY_PORT}/eureka
-    fetch-registry: true
-    register-with-eureka: true
+    fetch-registry: false
+    register-with-eureka: false
 server:
   port: 8109
+logging:
+  file:
+    path: /logs
+    name: user-service.log
