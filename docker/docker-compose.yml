@@ -2,32 +2,6 @@ networks:
     app-network:
         driver: bridge
 services:
-  rabbitmq:
-    image: rabbitmq:latest
-    container_name: memoryCode-RabbitMQ
-    env_file:
-      - .env
-    environment:
-      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
-      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
-      RABBITMQ_DEFAULT_VHOST: ${RABBITMQ_DEFAULT_VHOST}
-    ports:
-      - 5672:5672
-    networks:
-      - app-network
-  rabbitmq-mgmt:
-    image: rabbitmq:management
-    container_name: memoryCode-RabbitMQ-Mgmt
-    env_file:
-      - .env
-    environment:
-      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
-      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
-      RABBITMQ_DEFAULT_VHOST: ${RABBITMQ_DEFAULT_VHOST}2
-    ports:
-      - 15672:15672
-    networks:
-      - app-network
   db_pg:
     image: postgres:15
     container_name: memoryCode-postgres

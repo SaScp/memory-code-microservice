@@ -17,10 +17,15 @@ eureka:
     service-url:
       defaultZone: http://${DISCOVERY_HOST_CLIENT}:${DISCOVERY_PORT}/eureka
     fetch-registry: false
-    register-with-eureka: false
+    register-with-eureka: true
 server:
   port: 8109
 logging:
   file:
     path: /logs
     name: user-service.log
+springdoc:
+  swagger-ui:
+    path: /swagger-doc/swagger-ui.html
+  api-docs:
+    path:  /swagger-doc/api-docs

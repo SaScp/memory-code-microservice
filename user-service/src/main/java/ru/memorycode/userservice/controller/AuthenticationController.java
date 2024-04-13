@@ -1,5 +1,9 @@
 package ru.memorycode.userservice.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,16 +28,25 @@ public class AuthenticationController {
 
     private LoginService loginService;
 
-    private RegistrationService registrationService;
 
     @PostMapping(value = "/login", produces = "application/json")
+    @Operation(summary = "login user on site",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content =
+            @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = LoginUserEntityDto.class))
+            ),
+            responses = @ApiResponse(
+                    responseCode = "200",
+                    description = "user login",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = Map.class)
+                    )
+            )
+    )
     public Mono<Map> getUser(@RequestBody LoginUserEntityDto loginUserEntityDto) {
         return loginService.login(loginUserEntityDto.getLogin(), loginUserEntityDto.getPassword());
     }
 
-    @PostMapping(value = "/registration", produces = "application/json")
-    public ResponseEntity<HttpStatus> registration(@RequestBody RegistrationUserEntityDto userEntityDto) throws IOException, InterruptedException {
-        return registrationService.registerUser(userEntityDto);
-    }
 
 }
