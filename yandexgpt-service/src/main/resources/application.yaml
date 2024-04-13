@@ -13,7 +13,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://${DISCOVERY_HOST}:${DISCOVERY_PORT}/eureka
+      defaultZone: http://${DISCOVERY_HOST_CLIENT}:${DISCOVERY_PORT}/eureka
     fetch-registry: false
     register-with-eureka: true
 server:

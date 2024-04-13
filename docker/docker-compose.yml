@@ -42,7 +42,7 @@ services:
     ports:
       - 5433:5432
   discovery-service:
-    image: alexscorp/alexrep:s2
+    image: alexscorp/alexrep:s3
     container_name: memoryCode-discovery-service
     networks:
       - app-network
@@ -51,7 +51,7 @@ services:
     ports:
       - 8761:8761
   user-service:
-    image: alexscorp/alexrep:s3
+    image: alexscorp/alexrep:s4
     container_name: memoryCode-user-service
     networks:
       - app-network
