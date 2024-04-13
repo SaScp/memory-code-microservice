@@ -14,7 +14,6 @@ class AccessTokenGenerator:
     async def generate(self) -> str:
         async with aiohttp.ClientSession() as session:
             async with session.get(f"{config.USER_SERVICE_URL}/user/get/{self.user_id}") as response:
-                print(response.status)
                 if response.status != 200:
                     raise HTTPException(status_code=404, detail="User not found")
                 user = User(**await response.json())
