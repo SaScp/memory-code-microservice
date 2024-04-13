@@ -48,5 +48,8 @@ public class UserController {
     }
 
     @DeleteMapping
-    public ResponseEntity<HttpStatus>
+    public ResponseEntity<HttpStatus> deleteUser(@RequestParam Long userId) {
+        return userService.delete(userId)? ResponseEntity.ok().build() :
+                ResponseEntity.badRequest().build();
+    }
 }

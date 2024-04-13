@@ -51,5 +51,10 @@ public class DefaultUserService implements UserService {
         return user;
     }
 
+    @Override
+    public boolean delete(Long userId) {
+        return false;
+    }
+
 
 }

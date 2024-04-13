@@ -64,7 +64,7 @@ services:
       - 8109:8109
   yandexgpt-service:
     container_name: memoryCode-yandexgpt-service
-    image: alexscorp/alexrep:s4
+    image: alexscorp/alexrep:s2
     networks:
       - app-network
     depends_on:
