@@ -28,27 +28,23 @@ public class UserController {
     private ModelMapper modelMapper;
 
     @PostMapping("/save")
-
     public ResponseEntity<HttpStatus> saveUser(@RequestBody TelegramUserDto telegramUserEntity) {
         return userService.save(telegramUserEntity)? ResponseEntity.ok().build() :
                 ResponseEntity.badRequest().build();
     }
 
     @PostMapping("/save-auth-data")
-
     public Mono<ResponseEntity<HttpStatus>> saveAuthData(@RequestBody LoginUserEntityDto userEntityDto) {
         return userAuthenticationService.saveAuthData(userEntityDto)? Mono.just(ResponseEntity.ok().build()) :
                 Mono.just(ResponseEntity.badRequest().build());
     }
 
     @GetMapping("/get/{userId}")
-
     public Mono<ResponseEntity<TelegramUserDto>> getUserByUserId(@PathVariable Long userId) {
         return userService.getUserByUserId(userId).map(user -> ResponseEntity.ok(modelMapper.map(user, TelegramUserDto.class)));
     }
 
     @PatchMapping("/update")
-
     public ResponseEntity<TelegramUserDto> updateUser(@RequestBody TelegramUserDto telegramUserEntity) {
         return ResponseEntity.ok(modelMapper.map(userService.update(telegramUserEntity), TelegramUserDto.class));
     }
