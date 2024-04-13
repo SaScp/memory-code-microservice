@@ -35,4 +35,5 @@ public class GlobalControllerAdvice {
         ProblemDetail problemDetail = handlers.get(e.getClass()).execute(e);
         return ResponseEntity.status(problemDetail.getStatus()).body(problemDetail);
     }
+
 }

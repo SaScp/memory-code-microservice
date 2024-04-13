@@ -7,4 +7,6 @@ public class Biography {
     private String header;
 
     private String text;
+
+    private Boolean active;
 }

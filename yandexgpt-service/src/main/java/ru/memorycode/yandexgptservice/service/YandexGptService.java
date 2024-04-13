@@ -16,6 +16,7 @@ import ru.memorycode.yandexgptservice.util.exception.YandexGptProcessingExceptio
 
 import java.net.URI;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
@@ -60,9 +61,13 @@ public class YandexGptService {
                                 Mono.error(new YandexGptGenerateException("Error: " + clientResponse.statusCode() + " - " + clientResponse.bodyToMono(String.class).block())))
                 .bodyToMono(Map.class)
                 .onErrorReturn(Map.of("status", "400", "message", "YandexGpt response 4xx or 5xx"))
-                .map(map -> {
+                .handle((map, sink) -> {
                     log.info("YandexGpt response: " + map);
-                    return Map.of("id", map.get("id"));
+                    if (Optional.ofNullable(map).isEmpty() || !map.containsKey("id")) {
+                        sink.error(new YandexGptGenerateException("map is empty or doesn't contain key id"));
+                        return;
+                    }
+                    sink.next(Map.of("id", map.get("id")));
                 });
     }
 
@@ -78,7 +83,7 @@ public class YandexGptService {
                 .onErrorMap(throwable -> new YandexGptGenerateException("error"))
                 .handle((map, sink) -> {
                     log.info("YandexGpt response: " + map);
-                    if (map.getDone().equals(true))
+                    if (Optional.ofNullable(map).isPresent() && map.getDone().equals(true))
                         sink.next(map.getResponse().getAlternatives().get(0).getMessage());
                     else
                         sink.error(new YandexGptProcessingException());

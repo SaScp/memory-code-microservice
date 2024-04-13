@@ -8,7 +8,7 @@ import lombok.Data;
 public class CompletionOptions {
     private Boolean stream;
 
-    private String temperature;
+    private Integer temperature;
 
-    private String maxTokens;
+    private Integer maxTokens;
 }
