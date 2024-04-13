@@ -3,3 +3,4 @@ pydantic
 pydantic_settings
 fastapi
 uvicorn
+py-eureka-client
