@@ -41,3 +41,35 @@ services:
       - ./db:/docker-entrypoint-initdb.d
     ports:
       - 5433:5432
+  discovery-service:
+    image: alexscorp/alexrep:s2
+    container_name: memoryCode-discovery-service
+    networks:
+      - app-network
+    env_file:
+      - .env
+    ports:
+      - 8761:8761
+  user-service:
+    image: alexscorp/alexrep:s3
+    container_name: memoryCode-user-service
+    networks:
+      - app-network
+    depends_on:
+      - discovery-service
+      - db_pg
+    env_file:
+      - .env
+    ports:
+      - 8109:8109
+  yandexgpt-service:
+    container_name: memoryCode-yandexgpt-service
+    image: alexscorp/alexrep:s4
+    networks:
+      - app-network
+    depends_on:
+      - discovery-service
+    env_file:
+      - .env
+    ports:
+      - 8101:8101
