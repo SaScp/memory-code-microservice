@@ -6,6 +6,7 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 import ru.memorycode.userservice.util.exception.TelegramUserNotFoundException;
 import ru.memorycode.userservice.util.exception.UserNotFoundException;
 import ru.memorycode.userservice.util.handler.ExceptionHandlerStrategy;
@@ -34,12 +35,5 @@ public class GlobalControllerAdvice {
         return ResponseEntity
                 .status(problemDetail.getStatus())
                 .body(problemDetail);
-    }
-
-    @ExceptionHandler({Exception.class})
-    public ResponseEntity<ProblemDetail> globalExHandler(Exception e) {
-        return ResponseEntity
-                .internalServerError()
-                .body(ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage()));
     }
 }

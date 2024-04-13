@@ -4,11 +4,13 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
+import reactor.core.publisher.Mono;
 import ru.memorycode.userservice.dto.telegram.TelegramUserDto;
-import ru.memorycode.userservice.model.auth.TelegramUserEntity;
+
 import ru.memorycode.userservice.model.User;
 import ru.memorycode.userservice.repository.UserRepository;
 import ru.memorycode.userservice.service.UserService;
+import ru.memorycode.userservice.service.update.UpdateTelegramUserStrategy;
 import ru.memorycode.userservice.util.exception.TelegramUserNotFoundException;
 
 import java.time.LocalDateTime;
@@ -19,10 +21,10 @@ import java.util.List;
 public class DefaultUserService implements UserService {
 
     private UserRepository userRepository;
-    private List<Validator> validators;
 
+    private List<UpdateTelegramUserStrategy> userStrategies;
 
-    public Boolean save(TelegramUserEntity entity) {
+    public Boolean save(TelegramUserDto entity) {
         if (entity == null || userRepository.findByUserId(entity.getUserId()).isPresent()) {
             return false;
         }
@@ -31,21 +33,22 @@ public class DefaultUserService implements UserService {
         user.setLangCode(entity.getLangCode());
         user.setLastActivity(LocalDateTime.now());
         user.setCreatedAt(LocalDateTime.now());
+        user.setFirstLangSet(false);
         userRepository.save(user);
         return true;
     }
 
     @Override
-    public User getUserByUserId(Long userId) {
-        return userRepository.findByUserId(userId).orElseThrow(() ->
-                new TelegramUserNotFoundException("User not found"));
+    public Mono<User> getUserByUserId(Long userId) {
+        return Mono.just(userRepository.findByUserId(userId).orElseThrow(() ->
+                new TelegramUserNotFoundException("User not found")));
     }
 
     @Override
-    public User update(TelegramUserEntity entity) {
+    public User update(TelegramUserDto entity) {
         User user = userRepository.findByUserId(entity.getUserId()).orElseThrow(() ->
                 new TelegramUserNotFoundException("User not found"));
-        user.setLangCode(entity.getLangCode());
+        userStrategies.forEach(strategy -> strategy.execute(entity, user));
         user.setLastActivity(LocalDateTime.now());
         userRepository.save(user);
         return user;

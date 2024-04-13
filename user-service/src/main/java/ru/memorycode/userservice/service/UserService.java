@@ -1,17 +1,17 @@
 package ru.memorycode.userservice.service;
 
 import org.springframework.validation.BindingResult;
+import reactor.core.publisher.Mono;
 import ru.memorycode.userservice.dto.telegram.TelegramUserDto;
 import ru.memorycode.userservice.model.User;
-import ru.memorycode.userservice.model.auth.TelegramUserEntity;
 
 public interface UserService {
 
-    Boolean save(TelegramUserEntity entity);
+    Boolean save(TelegramUserDto entity);
 
-    User getUserByUserId(Long userId);
+    Mono<User> getUserByUserId(Long userId);
 
-    User update(TelegramUserEntity entity);
+    User update(TelegramUserDto entity);
 
     boolean delete(Long userId);
 }

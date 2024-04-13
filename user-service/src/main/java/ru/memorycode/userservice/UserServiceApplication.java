@@ -11,18 +11,20 @@ import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.reactive.config.EnableWebFlux;
+
 
 import ru.memorycode.userservice.model.auth.LoginUserEntity;
 
 @SpringBootApplication
 @EnableDiscoveryClient
 @Slf4j
-@EnableWebFlux
 @Async
+@EnableWebFlux
 public class UserServiceApplication  {
 
     public static void main(String[] args) {
@@ -33,5 +35,6 @@ public class UserServiceApplication  {
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
+
 
 }

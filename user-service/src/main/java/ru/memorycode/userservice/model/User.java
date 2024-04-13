@@ -28,6 +28,9 @@ public class User {
     @Column(name = "lang_code", nullable = false)
     private String langCode;
 
+    @Column(name = "first_lang_set", nullable = false)
+    private Boolean firstLangSet;
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 

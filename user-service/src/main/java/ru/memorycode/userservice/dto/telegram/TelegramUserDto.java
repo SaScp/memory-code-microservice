@@ -12,6 +12,9 @@ public class TelegramUserDto {
     @JsonProperty("lang_code")
     private String langCode;
 
+    @JsonProperty("first_lang_set")
+    private Boolean firstLangSet;
+
     private UserAuthenticationDto userAuth;
 
 }
