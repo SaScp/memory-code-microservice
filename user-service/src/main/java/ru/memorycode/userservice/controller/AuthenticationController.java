@@ -25,12 +25,12 @@ public class AuthenticationController {
 
     private RegistrationService registrationService;
 
-    @PostMapping("/login")
+    @PostMapping(value = "/login", produces = "application/json")
     public Mono<Map> getUser(@RequestBody LoginUserEntityDto loginUserEntityDto) {
         return loginService.login(loginUserEntityDto.getLogin(), loginUserEntityDto.getPassword());
     }
 
-    @PostMapping("/registration")
+    @PostMapping(value = "/registration", produces = "application/json")
     public Mono<ResponseEntity<HttpStatus>> registration(@RequestBody RegistrationUserEntityDto userEntityDto) {
         return registrationService.registerUser(userEntityDto);
     }

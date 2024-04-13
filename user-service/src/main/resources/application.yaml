@@ -16,3 +16,7 @@ eureka:
     register-with-eureka: true
 server:
   port: 8109
+logging:
+  file:
+    path: /logs
+    name: user-service.log

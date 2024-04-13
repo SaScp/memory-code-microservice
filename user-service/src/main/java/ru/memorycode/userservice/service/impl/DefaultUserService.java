@@ -15,6 +15,7 @@ import ru.memorycode.userservice.util.exception.TelegramUserNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -56,6 +57,11 @@ public class DefaultUserService implements UserService {
 
     @Override
     public boolean delete(Long userId) {
+        Optional<User> user = userRepository.findByUserId(userId);
+        if (user.isPresent()) {
+            userRepository.deleteById(user.get().getId());
+            return true;
+        }
         return false;
     }
 

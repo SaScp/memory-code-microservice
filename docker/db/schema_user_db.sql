@@ -3,7 +3,7 @@ CREATE SCHEMA IF NOT EXISTS user_microservice;
 CREATE TABLE IF NOT EXISTS user_microservice.t_auth
 (
     id SERIAL PRIMARY KEY,
-    login varchar(255)  NOT NULL,
+    login varchar(255) UNIQUE,
     password varchar(255)  NOT NULL
     );
 

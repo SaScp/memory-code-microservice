@@ -33,25 +33,25 @@ public class UserController {
                 ResponseEntity.badRequest().build();
     }
 
-    @PostMapping("/save-auth-data")
+    @PostMapping(value = "/save-auth-data",
+            consumes = "application/json")
     public Mono<ResponseEntity<HttpStatus>> saveAuthData(@RequestBody LoginUserEntityDto userEntityDto) {
         return userAuthenticationService.saveAuthData(userEntityDto)? Mono.just(ResponseEntity.ok().build()) :
                 Mono.just(ResponseEntity.badRequest().build());
     }
 
-    @GetMapping("/get/{userId}")
+    @GetMapping(value = "/get/{userId}", produces = "application/json")
     public Mono<ResponseEntity<TelegramUserDto>> getUserByUserId(@PathVariable Long userId) {
         return userService.getUserByUserId(userId).map(user -> ResponseEntity.ok(modelMapper.map(user, TelegramUserDto.class)));
     }
 
-    @PatchMapping("/update")
+    @PatchMapping(value = "/update", produces = "application/json")
     public ResponseEntity<TelegramUserDto> updateUser(@RequestBody TelegramUserDto telegramUserEntity) {
         return ResponseEntity.ok(modelMapper.map(userService.update(telegramUserEntity), TelegramUserDto.class));
     }
 
-    @DeleteMapping("/delete")
-
-    public ResponseEntity<HttpStatus> deleteUser(@RequestParam Long userId) {
+    @DeleteMapping("/delete/{userId}")
+    public ResponseEntity<HttpStatus> deleteUser(@PathVariable Long userId) {
         return userService.delete(userId)? ResponseEntity.ok().build() :
                 ResponseEntity.badRequest().build();
     }

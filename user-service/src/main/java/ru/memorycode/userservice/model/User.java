@@ -37,7 +37,7 @@ public class User {
     @Column(name = "last_activity", nullable = false)
     private LocalDateTime lastActivity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "auth_id",
             referencedColumnName = "id")
     private UserAuthentication userAuth;

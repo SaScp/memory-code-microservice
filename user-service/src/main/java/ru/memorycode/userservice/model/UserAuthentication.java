@@ -22,7 +22,7 @@ public class UserAuthentication {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "userAuth")
+    @OneToMany(mappedBy = "userAuth", fetch = FetchType.EAGER)
     private List<User> users;
 
     public void addUser(User user) {
