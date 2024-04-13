@@ -73,3 +73,14 @@ services:
       - .env
     ports:
       - 8101:8101
+  memories-service:
+    image: alexscorp/alexrep:s5
+    container_name: memoryCode-memories-service
+    networks:
+      - app-network
+    env_file:
+      - .env
+    ports:
+      - 8000:8000
+    restart: always
+    command: sh -c "python main.py"
