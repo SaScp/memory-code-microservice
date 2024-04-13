@@ -1,6 +1,11 @@
 package ru.memorycode.userservice.controller;
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -15,6 +20,8 @@ import ru.memorycode.userservice.dto.telegram.TelegramUserDto;
 import ru.memorycode.userservice.service.UserAuthenticationService;
 import ru.memorycode.userservice.service.UserService;
 
+import java.util.Map;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/user")
@@ -28,29 +35,102 @@ public class UserController {
     private ModelMapper modelMapper;
 
     @PostMapping("/save")
+    @Operation(summary = "save telegram user",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content =
+            @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = TelegramUserDto.class))
+            ),
+            responses = @ApiResponse(
+                    responseCode = "200",
+                    description = "user save",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = HttpStatus.class)
+                    )
+            )
+    )
     public ResponseEntity<HttpStatus> saveUser(@RequestBody TelegramUserDto telegramUserEntity) {
         return userService.save(telegramUserEntity)? ResponseEntity.ok().build() :
                 ResponseEntity.badRequest().build();
     }
 
-    @PostMapping(value = "/save-auth-data",
-            consumes = "application/json")
+    @PostMapping(value = "/save-auth-data", consumes = "application/json")
+    @Operation(summary = "save user from site",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content =
+            @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = LoginUserEntityDto.class))
+            ),
+            responses = @ApiResponse(
+                    responseCode = "200",
+                    description = "user auth save",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = HttpStatus.class)
+                    )
+            )
+    )
     public Mono<ResponseEntity<HttpStatus>> saveAuthData(@RequestBody LoginUserEntityDto userEntityDto) {
         return userAuthenticationService.saveAuthData(userEntityDto)? Mono.just(ResponseEntity.ok().build()) :
                 Mono.just(ResponseEntity.badRequest().build());
     }
 
     @GetMapping(value = "/get/{userId}", produces = "application/json")
+    @Operation(summary = "get data by id",
+            parameters = @Parameter(
+                    name = "userId",
+                    description = "id telegram user",
+                    required = true,
+                    schema = @Schema(type = "Long")
+            ),
+            responses = @ApiResponse(
+                    responseCode = "200",
+                    description = "get data by id",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = TelegramUserDto.class)
+                    )
+            )
+    )
     public Mono<ResponseEntity<TelegramUserDto>> getUserByUserId(@PathVariable Long userId) {
         return userService.getUserByUserId(userId).map(user -> ResponseEntity.ok(modelMapper.map(user, TelegramUserDto.class)));
     }
 
     @PatchMapping(value = "/update", produces = "application/json")
+    @Operation(summary = "update user",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content =
+            @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = TelegramUserDto.class))
+            ),
+            responses = @ApiResponse(
+                    responseCode = "200",
+                    description = "user update",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = TelegramUserDto.class)
+                    )
+            )
+    )
     public ResponseEntity<TelegramUserDto> updateUser(@RequestBody TelegramUserDto telegramUserEntity) {
         return ResponseEntity.ok(modelMapper.map(userService.update(telegramUserEntity), TelegramUserDto.class));
     }
 
     @DeleteMapping("/delete/{userId}")
+    @Operation(summary = "delete telegram user by id",
+            parameters = @Parameter(
+                    name = "userId",
+                    description = "id telegram user",
+                    required = true,
+                    schema = @Schema(type = "Long")
+            ),
+            responses = @ApiResponse(
+                    responseCode = "200",
+                    description = "delete telegram user by id",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = HttpStatus.class)
+                    )
+            )
+    )
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable Long userId) {
         return userService.delete(userId)? ResponseEntity.ok().build() :
                 ResponseEntity.badRequest().build();

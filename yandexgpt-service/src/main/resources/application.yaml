@@ -8,11 +8,16 @@ eureka:
     service-url:
       defaultZone: http://${DISCOVERY_HOST_CLIENT}:${DISCOVERY_PORT}/eureka
     fetch-registry: false
-    register-with-eureka: false
+    register-with-eureka: true
 server:
-  port: 8104
+  port: 8101
 yandex:
   gpt:
     api:
       indignity-key: b1g5og37bgh1ghh2s2qc
       key: AQVN1J4sCxYR98rj-tVppyp6gXQthbdmYvmgtO7a
+springdoc:
+  swagger-ui:
+    path: /swagger-doc/swagger-ui.html
+  api-docs:
+    path:  /swagger-doc/api-docs

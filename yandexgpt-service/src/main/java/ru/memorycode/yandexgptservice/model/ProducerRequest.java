@@ -1,5 +1,7 @@
 package ru.memorycode.yandexgptservice.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -13,9 +15,9 @@ public class ProducerRequest {
 
     private String fio;
 
-    private LocalDateTime dateOfBirth;
+    private String dateOfBirth;
 
-    private LocalDateTime dateOfdied;
+    private String dateOfdied;
 
     private String placeOfBirth;
 
