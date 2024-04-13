@@ -1,14 +1,6 @@
 spring:
   application:
    name: yandexgpt-service
-  rabbitmq:
-    username: ${RABBITMQ_DEFAULT_USER}
-    password: ${RABBITMQ_DEFAULT_PASS}
-    port: 5672
-    stream:
-      virtual-host: ${RABBITMQ_DEFAULT_VHOST}
-    host: ${RABBITMQ_HOST}
-    virtual-host: ${RABBITMQ_DEFAULT_VHOST}
   config:
     import: optional:file:.env[.properties]
 eureka:
@@ -16,11 +8,11 @@ eureka:
     service-url:
       defaultZone: http://${DISCOVERY_HOST_CLIENT}:${DISCOVERY_PORT}/eureka
     fetch-registry: false
-    register-with-eureka: true
+    register-with-eureka: false
 server:
   port: 8104
 yandex:
   gpt:
     api:
-      indignity-key: ajekjom0m5ghuv5e7uml
+      indignity-key: b1g5og37bgh1ghh2s2qc
       key: AQVN1J4sCxYR98rj-tVppyp6gXQthbdmYvmgtO7a
