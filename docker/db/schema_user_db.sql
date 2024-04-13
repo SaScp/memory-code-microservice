@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS user_microservice.t_user
 (
     id SERIAL PRIMARY KEY,
     user_id bigint UNIQUE,
-    auth_id bigint  REFERENCES user_microservice.t_auth(id),
+    auth_id bigint  REFERENCES user_microservice.t_auth(id) ON DELETE SET NULL,
     created_at timestamp NOT NULL,
     last_activity timestamp  NOT NULL,
     lang_code varchar(255)  NOT NULL

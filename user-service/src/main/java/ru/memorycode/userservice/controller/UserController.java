@@ -46,4 +46,10 @@ public class UserController {
     public ResponseEntity<TelegramUserDto> updateUser(@RequestBody TelegramUserEntity telegramUserEntity) {
         return ResponseEntity.ok(modelMapper.map(userService.update(telegramUserEntity), TelegramUserDto.class));
     }
+
+    @DeleteMapping
+    public ResponseEntity<HttpStatus> deleteUser(@RequestParam Long userId) {
+        return userService.delete(userId)? ResponseEntity.ok().build() :
+                ResponseEntity.badRequest().build();
+    }
 }

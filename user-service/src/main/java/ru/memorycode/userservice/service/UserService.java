@@ -12,4 +12,6 @@ public interface UserService {
     User getUserByUserId(Long userId);
 
     User update(TelegramUserEntity entity);
+
+    boolean delete(Long userId);
 }
