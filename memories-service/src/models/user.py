@@ -8,4 +8,4 @@ class AuthData(BaseModel):
 class User(BaseModel):
     user_id: int
     lang_code: str
-    t_auth: Optional[AuthData]
+    userAuth: Optional[AuthData]
