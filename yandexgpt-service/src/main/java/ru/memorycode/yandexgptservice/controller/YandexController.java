@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.media.Content;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 import ru.memorycode.yandexgptservice.service.YandexGptService;
@@ -17,6 +18,7 @@ import java.util.Map;
 
 @Slf4j
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*", value = "*")
 @Tag(name = "Yandex GPT Service", description = "Yandex GPT Service")
 public class YandexController {
 
@@ -26,7 +28,7 @@ public class YandexController {
         this.yandexGptService = yandexGptService;
     }
 
-    @PostMapping("/question")
+    @PostMapping(value = "/question", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Question biography",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content =
             @Content(mediaType = "application/json",
@@ -45,7 +47,7 @@ public class YandexController {
         return yandexGptService.questionCreateConsumer(producerRequest);
     }
 
-    @PostMapping("/epitaph")
+    @PostMapping(value = "/epitaph", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Generate epitaph",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content =
             @Content(mediaType = "application/json",
@@ -64,7 +66,7 @@ public class YandexController {
         return yandexGptService.epitaphCreateConsumer(producerRequest);
     }
 
-    @PostMapping("/biography")
+    @PostMapping(value = "/biography", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Generate biography",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content =
             @Content(mediaType = "application/json",

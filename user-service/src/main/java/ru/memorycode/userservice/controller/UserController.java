@@ -7,7 +7,10 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -25,10 +28,10 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/user")
-
+@Slf4j
 public class UserController {
 
-    private UserService userService;
+   private UserService userService;
 
     private UserAuthenticationService userAuthenticationService;
 
@@ -50,6 +53,7 @@ public class UserController {
             )
     )
     public ResponseEntity<HttpStatus> saveUser(@RequestBody TelegramUserDto telegramUserEntity) {
+        log.info("Save user: {}", telegramUserEntity);
         return userService.save(telegramUserEntity)? ResponseEntity.ok().build() :
                 ResponseEntity.badRequest().build();
     }
@@ -70,6 +74,7 @@ public class UserController {
             )
     )
     public Mono<ResponseEntity<HttpStatus>> saveAuthData(@RequestBody LoginUserEntityDto userEntityDto) {
+        log.info("Save user from site: {}", userEntityDto);
         return userAuthenticationService.saveAuthData(userEntityDto)? Mono.just(ResponseEntity.ok().build()) :
                 Mono.just(ResponseEntity.badRequest().build());
     }
@@ -78,9 +83,9 @@ public class UserController {
     @Operation(summary = "get data by id",
             parameters = @Parameter(
                     name = "userId",
-                    description = "id telegram user",
-                    required = true,
-                    schema = @Schema(type = "Long")
+                    description = "id telegram user"
+                    , required = true
+
             ),
             responses = @ApiResponse(
                     responseCode = "200",
@@ -92,6 +97,7 @@ public class UserController {
             )
     )
     public Mono<ResponseEntity<TelegramUserDto>> getUserByUserId(@PathVariable Long userId) {
+        log.info("Get user by id: {}", userId);
         return userService.getUserByUserId(userId).map(user -> ResponseEntity.ok(modelMapper.map(user, TelegramUserDto.class)));
     }
 
@@ -111,6 +117,7 @@ public class UserController {
             )
     )
     public ResponseEntity<TelegramUserDto> updateUser(@RequestBody TelegramUserDto telegramUserEntity) {
+        log.info("Update user: {}", telegramUserEntity);
         return ResponseEntity.ok(modelMapper.map(userService.update(telegramUserEntity), TelegramUserDto.class));
     }
 
@@ -132,6 +139,7 @@ public class UserController {
             )
     )
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable Long userId) {
+        log.info("Delete user by id: {}", userId);
         return userService.delete(userId)? ResponseEntity.ok().build() :
                 ResponseEntity.badRequest().build();
     }

@@ -3,6 +3,7 @@ package ru.memorycode.yandexgptservice.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.memorycode.yandexgptservice.util.exception.YandexGptGenerateException;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*", value = "*")
 @RestControllerAdvice
 public class GlobalControllerAdvice {
 

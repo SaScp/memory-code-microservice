@@ -27,6 +27,7 @@ public class GeneratorYandexGptRequest {
             messages.add(new Message("user", "Имя человека - Александр Александрович Иванов. Он родился 21.01.2000 и умер 12.11.2024. Ему нравились такие хобби, как игра в шахматы, чтение книг и плавание. По характеру был холериком. Он был трудолюбив и работал на заводе Светлана"));
             messages.add(new Message("assistant", "Александр Александрович навсегда останется в наших сердцах. Он был добрым, отзывчивым человеком. Верный муж, любящий отец, хороший сын - все это про Александра. Всю жизнь он старался поступать по совести и учил всех не унывать даже в трудных ситуациях. Он и сейчас смотрит на нас, и считает, что все будет хорошо!"));
             messages.add(new Message("user", "Теперь напиши эпитафию о другом человеке. " + generateTextEpitaph(request)));
+            messages.add(new Message("system", "на языке" + request.getLangCode()));
             return generateRequest(new CompletionOptions(true  ,1, 123123), messages);
         });
     }
@@ -38,6 +39,8 @@ public class GeneratorYandexGptRequest {
             messages.add(new Message("system", "Вы писатель и пишете  биографию умершего человека, основываясь на предоставленных данных. В первую очередь основывайся на заголовке биографии."));
             messages.add(new Message("user","Вот данные для биографии умершего " + generateTextForBiography(producerRequest)));
             messages.add(new Message("system", "напиши только биографию, без комментариев"));
+            messages.add(new Message("system", "на языке" + producerRequest.getLangCode()));
+
             return generateRequest(new CompletionOptions(true  ,1, 123123), messages);
         });
     }
@@ -48,6 +51,7 @@ public class GeneratorYandexGptRequest {
             messages.add(new Message("system", "ты должен сгенерировать 5 вопросов о человеке, который умер. Я дам тебе данные о нем, а ты сгенерируешь новые простые вопросы, не относящиеся к этим данным, но основывающиеся на них. "));
             messages.add(new Message("user", "Вот данные о умершем: " + generateTextForQuestion(producerRequest)));
             messages.add(new Message("system", "напиши только вопросы, без комментариев, разделяя новой строчкой"));
+            messages.add(new Message("system", "на языке" + producerRequest.getLangCode()));
             return generateRequest(new CompletionOptions(true, 1, 123123), messages);
         });
     }
