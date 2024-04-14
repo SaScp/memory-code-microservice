@@ -25,10 +25,12 @@ import ru.memorycode.userservice.service.UserService;
 
 import java.util.Map;
 
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/user")
 @Slf4j
+@CrossOrigin(origins = "*", allowedHeaders = "*", value = "*")
 public class UserController {
 
    private UserService userService;

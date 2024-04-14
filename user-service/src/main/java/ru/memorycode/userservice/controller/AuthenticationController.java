@@ -7,10 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 import ru.memorycode.userservice.dto.auth.LoginUserEntityDto;
 import ru.memorycode.userservice.dto.auth.RegistrationUserEntityDto;
@@ -24,6 +21,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/auth")
+@CrossOrigin(origins = "*", allowedHeaders = "*", value = "*")
 public class AuthenticationController {
 
     private LoginService loginService;

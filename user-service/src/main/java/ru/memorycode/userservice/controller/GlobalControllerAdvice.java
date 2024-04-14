@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 
 
 @RestControllerAdvice
+@CrossOrigin(origins = "*", allowedHeaders = "*", value = "*")
 public class GlobalControllerAdvice {
 
     private Map<Class<? extends RuntimeException>, ExceptionHandlerStrategy> handlers;
