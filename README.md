@@ -1,1 +1,1 @@
-## Prject from hackaton
+## Проект для хакатона
